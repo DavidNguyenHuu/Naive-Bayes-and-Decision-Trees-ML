@@ -1,10 +1,11 @@
 from __future__ import division
 from __future__ import division
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.tree import DecisionTreeClassifier
-from sklearn import metrics
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import precision_recall_fscore_support
+from sklearn.metrics import accuracy_score
 from codecs import open
-import numpy as np
 
 
 # We will start by by defining a new function we will call read documents
@@ -50,10 +51,9 @@ plt.show()
 
 # the first function will use Naive Bayes Classifier
 def predict_NB(documents, labels, test):
-    clf = GaussianNB()             # creating a classifier
-    clf.fit(documents, labels)     # assigning each review to a label
-    test_pre0 = clf.predict_log_proba(test)   # predicating the labels of the reviews evaluating set using the logarithmic function of the probabilities
-    return test_pre0                        # returning an array containing the the reviews with the predicated labels
+    clf = MultinomialNB(alpha=0.5)  # creating a classifier with 0.5 smoothing
+    clf.fit(documents, labels)  # assigning each review to a label
+    return clf.predic_log_proba(test)  # returning an array containing the the reviews with the predicated labels
 
 
 # the second function will use Base decision tree
@@ -70,4 +70,24 @@ def predict_Best_T(documents, labels, test):
     tree2 = tree2.fit(documents, labels)      # assigning each review to a label
     tree_pre2 = tree2.predict(test)      # predicating the labels of the reviews in the evaluating set
     return tree_pre2                   # returning an array containing the the reviews with the predicated labels
+
+# we will write the results for each model to a separate file
+f1 = open('Naive Bayes results.txt', 'a')
+
+f1.write(confusion_matrix(predict_NB(train_docs, train_labels, eval_docs), eval_labels))
+f1.write(str(precision_recall_fscore_support(predict_NB(train_docs, train_labels, eval_docs), eval_labels)))
+f1.write(str(accuracy_score(predict_NB(train_docs, train_labels, eval_docs), eval_labels)))
+f1.close()
+
+f2 = open('Base-Dt results.txt', 'a')
+f2.write(confusion_matrix(predict_Base_T(train_docs, train_labels, eval_docs), eval_labels))
+f2.write(str(precision_recall_fscore_support(predict_Base_T(train_docs, train_labels, eval_docs), eval_labels)))
+f2.write(str(accuracy_score(predict_Base_T(train_docs, train_labels, eval_docs), eval_labels)))
+f2.close()
+
+f3 = open('Best-Dt results.txt', 'a')
+f3.write(confusion_matrix(predict_Best_T(train_docs, train_labels, eval_docs), eval_labels))
+f3.write(str(precision_recall_fscore_support(predict_Best_T(train_docs, train_labels, eval_docs), eval_labels)))
+f3.write(str(accuracy_score(predict_Best_T(train_docs, train_labels, eval_docs), eval_labels)))
+f3.close()
 
