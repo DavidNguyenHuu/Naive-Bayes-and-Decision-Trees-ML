@@ -42,7 +42,9 @@ def get_frequency(data):
 # Plot the distribution of the number of the instances in each class.
 count= get_frequency(all_labels)
 print(count)
-plt.bar(range(len(count)), count.values())
+plt.title(label='Distribution of the number of the instances',fontsize=12,
+          color="black")
+plt.bar(count.keys(), count.values(),color='green')
 plt.show()
 
 
