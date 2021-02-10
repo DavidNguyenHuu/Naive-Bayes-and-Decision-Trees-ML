@@ -19,6 +19,17 @@ def read_documents(doc_file):
             labels.append(words[1])  # adding only the labels to the array labels
     return docs, labels
 
+
+# we will split the data into 2 sets
+
+all_docs, all_labels = read_documents('all_sentiment_shuffled.txt')
+
+split_point = int(0.80 * len(all_docs))
+train_docs = all_docs[:split_point]
+train_labels = all_labels[:split_point]
+eval_docs = all_docs[split_point:]
+eval_labels = all_labels[split_point:]
+
 # Task 1
 # This method computes the frequency of the instances in each class
 def get_frequency(data):
@@ -33,16 +44,6 @@ count= get_frequency(all_labels)
 print(count)
 plt.bar(range(len(count)), count.values())
 plt.show()
-
-# we will split the data into 2 sets
-
-all_docs, all_labels = read_documents('all_sentiment_shuffled.txt')
-
-split_point = int(0.80 * len(all_docs))
-train_docs = all_docs[:split_point]
-train_labels = all_labels[:split_point]
-eval_docs = all_docs[split_point:]
-eval_labels = all_labels[split_point:]
 
 
 # the first function will use Naive Bayes Classifier
