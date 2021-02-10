@@ -19,6 +19,20 @@ def read_documents(doc_file):
             labels.append(words[1])  # adding only the labels to the array labels
     return docs, labels
 
+# Task 1
+# This method computes the frequency of the instances in each class
+def get_frequency(data):
+    frequency = Counter()
+    for label in data:
+        frequency[label] += 1
+    return frequency
+
+
+# Plot the distribution of the number of the instances in each class.
+count= get_frequency(all_labels)
+print(count)
+plt.bar(range(len(count)), count.values())
+plt.show()
 
 # we will split the data into 2 sets
 
