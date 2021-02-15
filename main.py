@@ -39,12 +39,14 @@ def get_frequency(data):
 
 
 # Plot the distribution of the number of the instances in each class.
-count= get_frequency(all_labels)
-print(count)
-plt.title(label='Distribution of the number of the instances',fontsize=12,
+count = get_frequency(all_labels)
+plt.title(label='Distribution of the complete Dataset', fontsize=10,
           color="black")
-plt.bar(count.keys(), count.values(),color='green')
+plt.bar(count.keys(), count.values(), color='green')
+plt.xlabel('Sentiment')
+plt.ylabel('Frequency')
 plt.show()
+
 
 #Task 2 
 # the first model will be Naive Bayes Classifier
