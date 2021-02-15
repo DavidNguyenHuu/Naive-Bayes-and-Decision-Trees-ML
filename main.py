@@ -3,6 +3,7 @@ from __future__ import division
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import confusion_matrix
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import accuracy_score
 from collections import Counter
@@ -25,7 +26,7 @@ def read_documents(doc_file):
 
 # we will split the data into 2 sets
 all_docs, all_labels = read_documents('all_sentiment_shuffled.txt')
-count_vec= TfidfVectorizer(tokenizer=lambda x: x, preprocessor=lambda x: x)
+count_vec= CountVectorizer(tokenizer=lambda x: x, preprocessor=lambda x: x)
 vec=count_vec.fit_transform(all_docs)
 X_train, X_test, y_train, y_test = train_test_split(vec,all_labels,test_size=0.2, random_state=0)
 
@@ -55,21 +56,21 @@ plt.show()
     clf.fit(X_train, y_train) # assigning each review to a label
     clf_pred =clf.predict(X_test) # create an array containing the the test reviews with the predicated labels
     print("the accuracy of Naive Bayes is :",accuracy_score(y_test, clf_pred)) # print the model accuracy 
-    
+    print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test,y_pred, average='weighted'))
 
 # the second model will be Base decision tree
     tree1 = DecisionTreeClassifier(criterion="gini")     # creating a tree
     tree1.fit(X_train,y_train)    # assigning each review to a label
     tree1_pred= tree.predict(X_test)        # create an array containing the the test reviews with the predicated labels
     print("the accuracy of Base tree is : ",accuracy_score(y_test, tree1_pred))  # print the model accuracy 
-    
+    print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test,tree_pred, average='weighted'))
 
 # the third mdoel will be Best decision tree
     tree2 = DecisionTreeClassifier(criterion="entropy")  # creating a tree with better criteria which will be entropy to calcuate the information gain
     tree2.fit(X_train,y_train)      # assigning each review to a label
     tree2_pred = tree2.predict(X_test)      # create an array containing the the test reviews with the predicated labels
     print("the accuracy of Best tree is : ",accuracy_score(y_test, tree2_pred))    # print the model accuracy          
-
+    print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test,tree2_pred, average='weighted'))
 #Task3
 # we will write the results for each model to a separate file
 
