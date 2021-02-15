@@ -24,14 +24,10 @@ def read_documents(doc_file):
 
 
 # we will split the data into 2 sets
-
 all_docs, all_labels = read_documents('all_sentiment_shuffled.txt')
-
-split_point = int(0.80 * len(all_docs))
-train_docs = all_docs[:split_point]
-train_labels = all_labels[:split_point]
-eval_docs = all_docs[split_point:]
-eval_labels = all_labels[split_point:]
+count_vec= TfidfVectorizer(tokenizer=lambda x: x, preprocessor=lambda x: x)
+vec=count_vec.fit_transform(all_docs)
+X_train, X_test, y_train, y_test = train_test_split(vec,all_labels,test_size=0.2, random_state=0)
 
 # Task 1
 # This method computes the frequency of the instances in each class
@@ -50,46 +46,29 @@ plt.title(label='Distribution of the number of the instances',fontsize=12,
 plt.bar(count.keys(), count.values(),color='green')
 plt.show()
 
+#Task 2 
+# the first model will be Naive Bayes Classifier
 
-# the first function will use Naive Bayes Classifier
-def predict_NB(documents, labels, test):
     clf = MultinomialNB(alpha=0.5)  # creating a classifier with 0.5 smoothing
-    clf.fit(documents, labels)  # assigning each review to a label
-    return clf.predic_log_proba(test)  # returning an array containing the the reviews with the predicated labels
+    clf.fit(X_train, y_train) # assigning each review to a label
+    clf_pred =clf.predict(X_test) # create an array containing the the test reviews with the predicated labels
+    print("the accuracy of Naive Bayes is :",accuracy_score(y_test, clf_pred)) # print the model accuracy 
+    
 
+# the second model will be Base decision tree
+    tree1 = DecisionTreeClassifier(criterion="gini")     # creating a tree
+    tree1.fit(X_train,y_train)    # assigning each review to a label
+    tree1_pred= tree.predict(X_test)        # create an array containing the the test reviews with the predicated labels
+    print("the accuracy of Base tree is : ",accuracy_score(y_test, tree1_pred))  # print the model accuracy 
+    
 
-# the second function will use Base decision tree
-def predict_Base_T(documents, labels, test):
-    tree1 = DecisionTreeClassifier()     # creating a tree
-    tree1 = tree1.fit(documents, labels)   # assigning each review to a label
-    tree_pre1 = tree1.predict(test)        # predicating the labels of the reviews in the evaluating set
-    return tree_pre1                      # returning an array containing the the reviews with the predicated labels
+# the third mdoel will be Best decision tree
+    tree2 = DecisionTreeClassifier(criterion="entropy")  # creating a tree with better criteria which will be entropy to calcuate the information gain
+    tree2.fit(X_train,y_train)      # assigning each review to a label
+    tree2_pred = tree2.predict(X_test)      # create an array containing the the test reviews with the predicated labels
+    print("the accuracy of Best tree is : ",accuracy_score(y_test, tree2_pred))    # print the model accuracy          
 
-
-# the third function will use Best decision tree
-def predict_Best_T(documents, labels, test):
-    tree2 = DecisionTreeClassifier(criterion="entropy", max_depth=3)  # creating a tree with better criteria
-    tree2 = tree2.fit(documents, labels)      # assigning each review to a label
-    tree_pre2 = tree2.predict(test)      # predicating the labels of the reviews in the evaluating set
-    return tree_pre2                   # returning an array containing the the reviews with the predicated labels
-
+#Task3
 # we will write the results for each model to a separate file
-f1 = open('Naive Bayes results.txt', 'a')
 
-f1.write(confusion_matrix(predict_NB(train_docs, train_labels, eval_docs), eval_labels))
-f1.write(str(precision_recall_fscore_support(predict_NB(train_docs, train_labels, eval_docs), eval_labels)))
-f1.write(str(accuracy_score(predict_NB(train_docs, train_labels, eval_docs), eval_labels)))
-f1.close()
-
-f2 = open('Base-Dt results.txt', 'a')
-f2.write(confusion_matrix(predict_Base_T(train_docs, train_labels, eval_docs), eval_labels))
-f2.write(str(precision_recall_fscore_support(predict_Base_T(train_docs, train_labels, eval_docs), eval_labels)))
-f2.write(str(accuracy_score(predict_Base_T(train_docs, train_labels, eval_docs), eval_labels)))
-f2.close()
-
-f3 = open('Best-Dt results.txt', 'a')
-f3.write(confusion_matrix(predict_Best_T(train_docs, train_labels, eval_docs), eval_labels))
-f3.write(str(precision_recall_fscore_support(predict_Best_T(train_docs, train_labels, eval_docs), eval_labels)))
-f3.write(str(accuracy_score(predict_Best_T(train_docs, train_labels, eval_docs), eval_labels)))
-f3.close()
 
