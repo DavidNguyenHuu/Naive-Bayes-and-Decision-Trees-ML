@@ -27,7 +27,7 @@ def read_documents(doc_file):
 
 # we will split the data into 2 sets
 all_docs, all_labels = read_documents('all_sentiment_shuffled.txt')
-count_vec=CountVectorizer()
+count_vec= TfidfVectorizer(tokenizer=lambda x: x, preprocessor=lambda x: x)
 vec=count_vec.fit_transform(all_docs)
 X_train, X_test, y_train, y_test = train_test_split(vec,all_labels,test_size=0.2, random_state=0)
 
