@@ -56,14 +56,14 @@ plt.show()
     clf.fit(X_train, y_train) # assigning each review to a label
     clf_pred =clf.predict(X_test) # create an array containing the the test reviews with the predicated labels
     print("the accuracy of Naive Bayes is :",accuracy_score(y_test, clf_pred)) # print the model accuracy 
-    print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test,y_pred, average='weighted'))
+    print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test,clf_pred, average='weighted'))
 
 # the second model will be Base decision tree
     tree1 = DecisionTreeClassifier(criterion="gini")     # creating a tree
     tree1.fit(X_train,y_train)    # assigning each review to a label
-    tree1_pred= tree.predict(X_test)        # create an array containing the the test reviews with the predicated labels
+    tree1_pred= tree1.predict(X_test)        # create an array containing the the test reviews with the predicated labels
     print("the accuracy of Base tree is : ",accuracy_score(y_test, tree1_pred))  # print the model accuracy 
-    print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test,tree_pred, average='weighted'))
+    print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test,tree1_pred, average='weighted'))
 
 # the third mdoel will be Best decision tree
     tree2 = DecisionTreeClassifier(criterion="entropy")  # creating a tree with better criteria which will be entropy to calcuate the information gain
