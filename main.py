@@ -40,13 +40,6 @@ plt.xlabel('Sentiment')
 plt.ylabel('Frequency')
 plt.show()
 
-#Task 2 
-# the first model will be Naive Bayes Classifier
-
-    clf = MultinomialNB(alpha=0.5)  # creating a classifier with 0.5 smoothing
-    clf.fit(X_train, y_train) # assigning each review to a label
-    clf_pred =clf.predict(X_test) # create an array containing the the test reviews with the predicated labels
-    print("the accuracy of Naive Bayes is :",accuracy_score(y_test, clf_pred)) # print the model accuracy 
     
 # Task 2 & 3 - 3 ML models
 # Naive Bayes Classifier
@@ -65,12 +58,7 @@ plt.show()
 # text_file.write("The precision, recall , fscore for Naive Bayes are: %s"%precision_recall_fscore_support)
 # print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test, clf_pred, average='weighted'))
 
-# the second model will be Base decision tree
-    tree1 = DecisionTreeClassifier(criterion="gini")     # creating a tree
-    tree1.fit(X_train,y_train)    # assigning each review to a label
-    tree1_pred= tree.predict(X_test)        # create an array containing the the test reviews with the predicated labels
-    print("the accuracy of Base tree is : ",accuracy_score(y_test, tree1_pred))  # print the model accuracy 
-    
+
 # Base Decision Tree
 tree1 = DecisionTreeClassifier(criterion="gini")  # creating a tree
 tree1.fit(X_train, y_train)  # assigning each review to a label
@@ -84,16 +72,6 @@ plot_confusion_matrix(tree1, X_test, y_test)
 plt.show()
 # print("the accuracy of Base tree is : ", accuracy_score(y_test, tree1_pred))  # print the model accuracy
 # print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test, tree1_pred, average='weighted'))
-
-# the third mdoel will be Best decision tree
-    tree2 = DecisionTreeClassifier(criterion="entropy")  # creating a tree with better criteria which will be entropy to calcuate the information gain
-    tree2.fit(X_train,y_train)      # assigning each review to a label
-    tree2_pred = tree2.predict(X_test)      # create an array containing the the test reviews with the predicated labels
-    print("the accuracy of Best tree is : ",accuracy_score(y_test, tree2_pred))    # print the model accuracy          
-
-#Task3
-# we will write the results for each model to a separate file
-
 
 # Best decision tree
 tree2 = DecisionTreeClassifier(
