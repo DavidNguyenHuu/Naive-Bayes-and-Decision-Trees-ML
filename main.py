@@ -2,7 +2,7 @@ from __future__ import division
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, plot_confusion_matrix
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import accuracy_score
@@ -23,11 +23,12 @@ def read_documents(doc_file):
             labels.append(words[1])  # adding only the labels to the array labels
     return docs, labels
 
+
 # we will split the data into 2 sets
 all_docs, all_labels = read_documents('all_sentiment_shuffled.txt')
-count_vec= CountVectorizer(tokenizer=lambda x: x, preprocessor=lambda x: x)
-vec=count_vec.fit_transform(all_docs)
-X_train, X_test, y_train, y_test = train_test_split(vec,all_labels,test_size=0.2, random_state=0)
+count_vec = CountVectorizer(tokenizer=lambda x: x, preprocessor=lambda x: x)
+vec = count_vec.fit_transform(all_docs)
+X_train, X_test, y_train, y_test = train_test_split(vec, all_labels, test_size=0.2, random_state=0)
 
 
 # Task 1
@@ -48,7 +49,6 @@ plt.xlabel('Sentiment')
 plt.ylabel('Frequency')
 plt.show()
 
-    
 # Task 2 & 3 - 3 ML models
 # Naive Bayes Classifier
 clf = MultinomialNB(alpha=0.5)  # creating a classifier with 0.5 smoothing
