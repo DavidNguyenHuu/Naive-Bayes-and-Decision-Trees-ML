@@ -1,1 +1,2 @@
-# comp472_a1
+# COMP 472 : Artificial Intelligence
+
