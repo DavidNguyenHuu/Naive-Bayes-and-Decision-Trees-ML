@@ -68,7 +68,7 @@ plt.show()
 
 
 # Base Decision Tree
-tree1 = DecisionTreeClassifier(criterion="gini")  # creating a tree
+tree1 = DecisionTreeClassifier()  # creating a tree
 tree1.fit(X_train, y_train)  # assigning each review to a label
 tree1_pred = tree1.predict(X_test)  # create an array containing the the test reviews with the predicated labels
 text_file = open("output_Base_DT.txt", "w")
