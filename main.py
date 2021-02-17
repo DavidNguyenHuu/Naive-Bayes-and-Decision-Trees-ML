@@ -51,7 +51,7 @@ plt.show()
 
 # Task 2 & 3 - 3 ML models
 # Naive Bayes Classifier
-clf = MultinomialNB(alpha=0.5)  # creating a classifier with 0.5 smoothing
+clf = MultinomialNB(alpha=0.9)  # creating a classifier with 0.5 smoothing
 clf.fit(X_train, y_train)  # assigning each review to a label
 clf_pred = clf.predict(X_test)  # create an array containing the the test reviews with the predicated labels
 text_file = open("output_NB.txt", "w")
