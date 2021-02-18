@@ -65,8 +65,7 @@ text_file.close()
 
 plot_confusion_matrix(clf, X_test, y_test)
 plt.show()
-# text_file.write("The precision, recall , fscore for Naive Bayes are: %s"%precision_recall_fscore_support)
-# print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test, clf_pred, average='weighted'))
+
 
 
 # Base Decision Tree
@@ -83,8 +82,7 @@ text_file.write(str(confusion_matrix(y_test, tree1_pred)) + "\n")
 text_file.close()
 plot_confusion_matrix(tree1, X_test, y_test)
 plt.show()
-# print("the accuracy of Base tree is : ", accuracy_score(y_test, tree1_pred))  # print the model accuracy
-# print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test, tree1_pred, average='weighted'))
+
 
 # Best decision tree
 tree2 = DecisionTreeClassifier(
@@ -101,5 +99,4 @@ text_file.write(str(confusion_matrix(y_test, tree2_pred)) + "\n")
 text_file.close()
 plot_confusion_matrix(tree2, X_test, y_test)
 plt.show()
-# print("the accuracy of Best tree is : ", accuracy_score(y_test, tree2_pred))  # print the model accuracy
-# print("the precision, recall , fscore are :", precision_recall_fscore_support(y_test, tree2_pred, average='weighted'))
+
