@@ -1,0 +1,27 @@
+For all 3 models, the results of the Precision, the Recall and the Fscore were similar to the accuracy. 
+The reason for these results is the distribution of the data, since the 2 labels are reparented equally 
+as we saw in the distribution plot. Also, since the number of false positives is close to the number 
+of false negatives for all the models, all of their three metrics have similar values.  
+
+The results of the Naive Bayes Classifier model were the best in comparison to the other 2 models.
+Some of its misclassifications can be due to the assumption that the features are independent from each other. 
+For example, one of the misclassified documents is the one with identifier 878 and it starts with: 
+"i am a huge Thoman Hardy fan , and i was not disappointed"
+The model predicted this instance to be neg when it should be pos. 
+That probably happened because "i was not disappointed" should be a positive thing but independently,
+"not" and "disappointed" gives out a negative sentiment.
+
+The results of the Base Decision Tree model were the worst of the 3 models 
+with the Best Decision Tree only being slightly better.
+Some of their misclassifications can be due to features not providing a precise enough classfication. 
+Some rows that were not misclassified by the Naive Bayes Classifier but were by these models,
+such as the document with identifier 167, were reviews about a book or movie. 
+Most of these reviews were just presenting the plot of the book/movie which 
+provides meaningless features or features out of context which doesn't help with the classficiation.
+
+Also, most misclassified documents tend be short which provides few features, or tend to start with a
+positive statement and ends with a negative one or vice versa, which could confuse the models.
+
+
+
+
