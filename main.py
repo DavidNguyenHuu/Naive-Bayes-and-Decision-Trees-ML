@@ -73,7 +73,10 @@ tree1.fit(X_train, y_train)  # assigning each review to a label
 tree1_pred = tree1.predict(X_test)  # create an array containing the the test reviews with the predicated labels
 text_file = open("output_Base_DT.txt", "w")
 for row, classes in enumerate(tree1_pred):
-  text_file.write(str(row+1)+","+str(classes)+"\n")
+    if classes != y_test[row]:
+        print("Row number", i_test[row], 'has been classified as', classes, 'but should be', y_test[row])
+        print("It contains:", all_docs[i_test[row]], "\n")
+    text_file.write(str(row+1)+","+str(classes)+"\n")
 ac_DT = accuracy_score(y_test, tree1_pred)
 text_file.write("The accuracy of Base Decision Tree is: %s\n" % ac_DT)
 PRFS_DT = str(precision_recall_fscore_support(y_test, tree1_pred, average='weighted'))
@@ -91,7 +94,10 @@ tree2.fit(X_train, y_train)  # assigning each review to a label
 tree2_pred = tree2.predict(X_test)  # create an array containing the the test reviews with the predicated labels
 text_file = open("output_Best_DT.txt", "w")
 for row, classes in enumerate(tree2_pred):
-  text_file.write(str(row+1)+","+str(classes)+"\n")
+    if classes != y_test[row]:
+        print("Row number", i_test[row], 'has been classified as', classes, 'but should be', y_test[row])
+        print("It contains:", all_docs[i_test[row]], "\n")
+    text_file.write(str(row+1)+","+str(classes)+"\n")
 ac_BDT = accuracy_score(y_test, tree2_pred)
 text_file.write("The accuracy of Best Decision Tree is: %s\n" % ac_BDT)
 PRFS_BDT = str(precision_recall_fscore_support(y_test, tree2_pred, average='weighted'))
