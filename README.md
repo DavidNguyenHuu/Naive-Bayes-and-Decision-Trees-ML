@@ -1,4 +1,4 @@
-# COMP 472 : Artificial Intelligence
+# COMP 472 : Artificial Intelligence (Team-18)
 
 Names        | Student ID
 ------------ | -------------
