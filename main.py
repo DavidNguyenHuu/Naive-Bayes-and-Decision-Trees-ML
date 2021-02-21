@@ -8,7 +8,6 @@ from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import accuracy_score
 from collections import Counter
 import matplotlib.pyplot as plt
-import numpy as np
 from codecs import open
 
 
@@ -27,11 +26,14 @@ def read_documents(doc_file):
 # We will split the data into 2 sets
 all_docs, all_labels = read_documents('all_sentiment_shuffled.txt')
 classes_index = list(set(all_labels))  # neg = 0, pos = 1, since first label in data set is neg
-indices = np.arange(len(all_docs))
 count_vec = CountVectorizer(tokenizer=lambda x: x, preprocessor=lambda x: x)
 vec = count_vec.fit_transform(all_docs)
+""" Task 4 - keep track of indices
+indices = np.arange(len(all_docs))
 X_train, X_test, y_train, y_test, i_train, i_test = train_test_split(vec, all_labels, indices, test_size=0.2,
                                                                      random_state=0)
+"""
+X_train, X_test, y_train, y_test = train_test_split(vec, all_labels, test_size=0.2, random_state=0)
 
 
 # Task 1
@@ -61,11 +63,13 @@ clf.fit(X_train, y_train)  # assigning each review to a label
 clf_pred = clf.predict(X_test)  # create an array containing the the test reviews with the predicated labels
 text_file = open("output_NB.txt", "w")
 for row, classes in enumerate(clf_pred):
-    if classes != y_test[row]:  # check if misclassified, if so print document info
+    """ Task 4 - check if misclassified, if so print document info 
+    if classes != y_test[row]:
         print("Row number", i_test[row], 'has been classified as', classes_index.index(classes), 'but should be',
               classes_index.index(y_test[row]))
         print("It contains:", all_docs[i_test[row]], "\n")
-    text_file.write(str(row + 1) + ", " + str(classes_index.index(classes)) + "\n")
+    """
+    text_file.write(str(row + 1)+", "+str(classes_index.index(classes)) + "\n")
 ac_NB = accuracy_score(y_test, clf_pred)
 text_file.write("The accuracy of Naive Bayes is: %s\n" % ac_NB)
 PRFS_NB = str(precision_recall_fscore_support(y_test, clf_pred, average='weighted'))
@@ -82,11 +86,13 @@ tree1.fit(X_train, y_train)  # assigning each review to a label
 tree1_pred = tree1.predict(X_test)  # create an array containing the the test reviews with the predicated labels
 text_file = open("output_Base_DT.txt", "w")
 for row, classes in enumerate(tree1_pred):
+    """ Task 4 - check if misclassified, if so print document info 
     if classes != y_test[row]:
         print("Row number", i_test[row], 'has been classified as', classes_index.index(classes), 'but should be',
               classes_index.index(y_test[row]))
         print("It contains:", all_docs[i_test[row]], "\n")
-    text_file.write(str(row + 1) + ", " + str(classes_index.index(classes)) + "\n")
+    """
+    text_file.write(str(row + 1)+", "+str(classes_index.index(classes)) + "\n")
 ac_DT = accuracy_score(y_test, tree1_pred)
 text_file.write("The accuracy of Base Decision Tree is: %s\n" % ac_DT)
 PRFS_DT = str(precision_recall_fscore_support(y_test, tree1_pred, average='weighted'))
@@ -104,11 +110,13 @@ tree2.fit(X_train, y_train)  # assigning each review to a label
 tree2_pred = tree2.predict(X_test)  # create an array containing the the test reviews with the predicated labels
 text_file = open("output_Best_DT.txt", "w")
 for row, classes in enumerate(tree2_pred):
+    """ Task 4 - check if misclassified, if so print document info 
     if classes != y_test[row]:
         print("Row number", i_test[row], 'has been classified as', classes_index.index(classes), 'but should be',
               classes_index.index(y_test[row]))
         print("It contains:", all_docs[i_test[row]], "\n")
-    text_file.write(str(row + 1) + ", " + str(classes_index.index(classes)) + "\n")
+    """
+    text_file.write(str(row + 1)+", "+str(classes_index.index(classes)) + "\n")
 ac_BDT = accuracy_score(y_test, tree2_pred)
 text_file.write("The accuracy of Best Decision Tree is: %s\n" % ac_BDT)
 PRFS_BDT = str(precision_recall_fscore_support(y_test, tree2_pred, average='weighted'))
